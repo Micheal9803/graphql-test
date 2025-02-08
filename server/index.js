@@ -58,7 +58,7 @@ async function startServer() {
 
   app.use("/graphql", cors(), express.json(), expressMiddleware(server));
 
-  app.listen(400, () => {
+  app.listen(4000, () => {
     console.log("Server is running on http://localhost:4000/graphql");
   });
 }
