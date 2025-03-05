@@ -24,6 +24,7 @@ const typeDefs = `#graphql
 
   type Mutation {
     addBook(title: String!, author: String!, year: Int!): Book
+    deleteBook(id: ID!): Book
   }
 `;
 
@@ -42,6 +43,14 @@ const resolvers = {
       };
       books.push(newBook);
       return newBook;
+    },
+    deleteBook: (_, { id }) => {
+      const bookIndex = books.findIndex((book) => book.id === id);
+      if (bookIndex === -1) {
+        throw new Error("Book not found");
+      }
+      const [deletedBook] = books.splice(bookIndex, 1);
+      return deletedBook;
     },
   },
 };
