@@ -1,15 +1,19 @@
 import React from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import {
+  useQuery,
+  useMutation,
+  NetworkStatus,
+  useSuspenseQuery,
+} from "@apollo/client";
 import { GET_BOOKS, DELETE_BOOK } from "../queries/gql";
 
 const BooksList = () => {
-  const { loading, error, data } = useQuery(GET_BOOKS);
+  const { error, data, refetch, networkStatus } = useSuspenseQuery(GET_BOOKS);
 
-  const [deleteBook] = useMutation(DELETE_BOOK, {
-    refetchQueries: [{ query: GET_BOOKS }],
-  });
+  const [deleteBook] = useMutation(DELETE_BOOK, {});
 
-  if (loading) return <p>Loading...</p>;
+  if (networkStatus === NetworkStatus.refetch) return <p>refetching...</p>;
+
   if (error) return <p>Error: {error.message}</p>;
 
   return (
@@ -31,6 +35,7 @@ const BooksList = () => {
           </li>
         ))}
       </ul>
+      <button onClick={() => refetch()}>refetch</button>
     </div>
   );
 };

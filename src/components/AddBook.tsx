@@ -5,7 +5,7 @@ import React from "react";
 const AddBook = () => {
   let title, author, year;
   const [addBook] = useMutation(ADD_BOOK, {
-    refetchQueries: [{ query: GET_BOOKS }],
+    // refetchQueries: [{ query: GET_BOOKS }],
   });
 
   return (
