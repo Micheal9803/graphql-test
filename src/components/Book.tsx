@@ -9,6 +9,7 @@ type BookId = {
 const Book = ({ id }: BookId) => {
   const { data, loading, error } = useQuery(GET_BOOK, {
     variables: { id: id },
+    pollInterval: 5000,
   });
 
   if (loading) return <p>Loading...</p>;
